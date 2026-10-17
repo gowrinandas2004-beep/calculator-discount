@@ -1,0 +1,387 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Calculator</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(110deg, #182c4c, #101c33);
+            color: #111;
+            min-height: 100vh;
+        }
+
+        .page-heading {
+            text-align: center;
+            padding: 12px 15px 22px;
+            color: #f5f5f5;
+        }
+
+        .page-heading h2 {
+            font-size: 27px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-heading p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .main-panel {
+            width: 88%;
+            min-height: 500px;
+            margin: 0 auto;
+            background: #f2f0ed;
+            border-radius: 8px;
+            padding: 25px 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .result-box {
+            border: 2px solid #77766f;
+            border-radius: 5px;
+            min-height: 450px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .result-box h3 {
+            font-size: 27px;
+            font-weight: 700;
+            margin: 0 0 20px;
+        }
+
+        .result-box h4 {
+            font-size: 23px;
+            margin-bottom: 20px;
+        }
+
+        .new-price {
+            font-size: 27px;
+            font-weight: 600;
+            color: #d49a43;
+            margin-bottom: 28px;
+        }
+
+        .result-bottom {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .result-item h5 {
+            font-size: 19px;
+            margin-bottom: 20px;
+        }
+
+        .result-item p {
+            font-size: 21px;
+            margin: 0;
+            color: #777f73;
+        }
+
+        .result-item:last-child p {
+            color: #b56c83;
+        }
+
+        .calculator {
+            width: 100%;
+            text-align: center;
+            padding: 15px 25px;
+        }
+
+        .coupon {
+            width: 165px;
+            height: 165px;
+            margin: 0 auto 22px;
+            background: linear-gradient(140deg, #39b8f1, #087fc6);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 3px dashed #69c8f2;
+            box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.12);
+        }
+
+        .coupon .percent {
+            font-size: 39px;
+            font-weight: 800;
+            line-height: 0.95;
+        }
+
+        .coupon .off {
+            font-size: 36px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .coupon small {
+            font-size: 9px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 7px 0;
+        }
+
+        .coupon .promo {
+            background: #e52c35;
+            padding: 5px 13px;
+            font-size: 17px;
+            font-weight: 800;
+            letter-spacing: 4px;
+        }
+
+        .form-area {
+            width: 185px;
+            max-width: 100%;
+            margin: auto;
+            text-align: left;
+        }
+
+        .form-area label {
+            display: block;
+            text-align: center;
+            font-size: 17px;
+            margin-bottom: 10px;
+            white-space: nowrap;
+        }
+
+        .form-area input {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #aaa;
+            border-radius: 0;
+            background: transparent;
+            padding: 5px 9px;
+            margin-bottom: 8px;
+            outline-color: #168dcc;
+        }
+
+        /* Remove up/down arrows from number inputs */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 4px;
+        }
+
+        .buttons button {
+            padding: 7px 12px;
+            border: 1px solid #aaa;
+            border-radius: 9px;
+            background: transparent;
+            color: #777;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background: #193253;
+            color: white;
+        }
+
+        @media (max-width: 767px) {
+            .page-heading h2 {
+                font-size: 23px;
+            }
+
+            .main-panel {
+                width: 94%;
+                padding: 15px;
+            }
+
+            .result-box {
+                min-height: 330px;
+                padding: 20px 10px;
+            }
+
+            .result-box h3 {
+                font-size: 23px;
+            }
+
+            .result-bottom {
+                gap: 5px;
+            }
+
+            .result-item h5 {
+                font-size: 15px;
+            }
+
+            .calculator {
+                padding: 25px 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="page-heading">
+        <h2>DISCOUNT CALCULATOR</h2>
+        <p>
+            Transform your savings and uncover the ultimate discount
+            calculation for your items
+        </p>
+    </header>
+
+    <main class="main-panel">
+        <div class="container-fluid">
+            <div class="row align-items-center g-4">
+
+                <!-- Left side: Results -->
+                <div class="col-md-7">
+                    <section class="result-box">
+
+                        <h3>Amount Paid</h3>
+
+                        <h4>New Price</h4>
+
+                        <div class="new-price" id="newPrice">
+                            ₹0
+                        </div>
+
+                        <div class="result-bottom">
+
+                            <div class="result-item">
+                                <h5>Amount Saved</h5>
+                                <p id="amountSaved">₹0</p>
+                            </div>
+
+                            <div class="result-item">
+                                <h5>Price Difference</h5>
+                                <p id="priceDifference">₹0</p>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right side: Calculator -->
+                <div class="col-md-5">
+                    <section class="calculator">
+
+                        <div class="coupon">
+                            <div class="percent">20%</div>
+                            <div class="off">OFF</div>
+                            <small>PROMO CODE</small>
+                            <div class="promo">GET20</div>
+                        </div>
+
+                        <form class="form-area" id="discountForm">
+
+                            <label for="amount">EnterAmount(₹)</label>
+
+                            <input
+                                type="number"
+                                id="amount"
+                                min="0"
+                                step="any"
+                                required
+                            >
+
+                            <label for="discount">Enter Discount(%)</label>
+
+                            <input
+                                type="number"
+                                id="discount"
+                                min="0"
+                                max="100"
+                                step="any"
+                                required
+                            >
+
+                            <div class="buttons">
+                                <button type="submit">CALCULATE</button>
+                                <button type="button" id="resetBtn">RESET</button>
+                            </div>
+
+                        </form>
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById("discountForm");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const amount = Number(
+                document.getElementById("amount").value
+            );
+
+            const discount = Number(
+                document.getElementById("discount").value
+            );
+
+            if (
+                document.getElementById("amount").value === "" ||
+                document.getElementById("discount").value === "" ||
+                !Number.isFinite(amount) ||
+                !Number.isFinite(discount) ||
+                amount < 0 ||
+                discount < 0 ||
+                discount > 100
+            ) {
+                alert("Please enter a valid amount and a discount from 0% to 100%.");
+                return;
+            }
+
+            const saved = amount * discount / 100;
+            const finalPrice = amount - saved;
+
+            document.getElementById("newPrice").textContent =
+                "₹" + finalPrice.toFixed(2);
+
+            document.getElementById("amountSaved").textContent =
+                "₹" + saved.toFixed(2);
+
+            document.getElementById("priceDifference").textContent =
+                "₹" + saved.toFixed(2);
+        });
+
+        document.getElementById("resetBtn").addEventListener("click", function () {
+            form.reset();
+
+            document.getElementById("newPrice").textContent = "₹0";
+            document.getElementById("amountSaved").textContent = "₹0";
+            document.getElementById("priceDifference").textContent = "₹0";
+        });
+    </script>
+
+</body>
+</html>
+```
